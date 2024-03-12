@@ -25,6 +25,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final String secret;
 
+    private int counterFilter = 1;
     public JwtRequestFilter(@Value("${jwt.secret}") String secret) {
         this.secret = secret;
     }
@@ -33,17 +34,26 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (request.getRequestURI().equals("/v1/auth") || request.getRequestURI().equals("/health")){
-            filterChain.doFilter(request, response);
-        } else if (request.getRequestURI().equals("/v2/api-docs") ||
-                request.getRequestURI().equals("/configuration/ui") ||
-                request.getRequestURI().matches("/swagger-resources.*") ||
-                request.getRequestURI().equals("/configuration/security") ||
-                request.getRequestURI().equals("/swagger-ui.html") ||
-                request.getRequestURI().equals("/webjars") ||
-                request.getRequestURI().matches("/swagger-ui/.*")){
+        System.out.println(counterFilter + " " + request.getRequestURI());
+        counterFilter++;
+
+        if (request.getRequestURI().equals("/v1/auth")
+                || request.getRequestURI().equals("/health")
+                || request.getRequestURI().startsWith("/swagger")
+                || request.getRequestURI().startsWith("/v3/api-docs")
+                || request.getRequestURI().matches("/v3/api-docs/*")
+                || request.getRequestURI().matches("/swagger-ui*")
+                || request.getRequestURI().matches("/swagger-ui.html")
+                || request.getRequestURI().matches("/swagger-ui/index.html")
+                || request.getRequestURI().matches("/swagger-ui/swagger-initializer.js")
+                || request.getRequestURI().matches("/swagger-ui/swagger-ui.css")
+                || request.getRequestURI().matches("/swagger-ui-bundle.js")
+                || request.getRequestURI().matches("/swagger-ui/index.css")
+        ){
             filterChain.doFilter(request, response);
         } else if (HttpMethod.OPTIONS.name().equals(request.getMethod())){
+            System.out.println("Primera comparacion: " + HttpMethod.OPTIONS.name());
+            System.out.println("Segunda comparacion: " + request.getMethod());
             response.setStatus(HttpServletResponse.SC_OK);
             filterChain.doFilter(request, response);
         } else {
