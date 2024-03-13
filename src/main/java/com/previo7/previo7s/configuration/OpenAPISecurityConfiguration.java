@@ -33,9 +33,14 @@ import java.lang.annotation.Inherited;
                 termsOfService = "Terminos y servicios de ADA",
                 description = "My first Swagger"
         ),
-        servers = @Server(
+        servers = {
+                @Server(
                 url = "http://localhost:8080",
-                description = "Local Enviroment"
-        )
+                description = "Local Environment"
+                ),@Server(
+                    url = "https://intermedio-github-actions.onrender.com",
+                    description = "Production Environment"
+                )
+        }
 )
 public class OpenAPISecurityConfiguration {}
