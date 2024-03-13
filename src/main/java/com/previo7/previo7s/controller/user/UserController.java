@@ -3,6 +3,8 @@ package com.previo7.previo7s.controller.user;
 import com.previo7.previo7s.dto.UserDto;
 import com.previo7.previo7s.dto.UserResponseDto;
 import com.previo7.previo7s.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import static com.previo7.previo7s.utils.Constants.ADMIN_ROLE;
 
 @RestController
 @RequestMapping("/v1/user")
+@SecurityRequirement(name = "Bearer Authentication")
 public class UserController {
 
     private final UserService userService;
@@ -33,6 +36,8 @@ public class UserController {
         UserResponseDto userCreated = userService.createUser(adminUserEntity);
     }
 
+    @Operation(summary = "Consult all user", description = "In this controller you can consult all the users")
+    //@SecurityRequirement(name = "Bearer Authentication")
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsers(){
         try{

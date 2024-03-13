@@ -41,14 +41,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 || request.getRequestURI().equals("/health")
                 || request.getRequestURI().startsWith("/swagger")
                 || request.getRequestURI().startsWith("/v3/api-docs")
-                || request.getRequestURI().matches("/v3/api-docs/*")
+                /*|| request.getRequestURI().matches("/v3/api-docs/*")
                 || request.getRequestURI().matches("/swagger-ui*")
                 || request.getRequestURI().matches("/swagger-ui.html")
                 || request.getRequestURI().matches("/swagger-ui/index.html")
                 || request.getRequestURI().matches("/swagger-ui/swagger-initializer.js")
                 || request.getRequestURI().matches("/swagger-ui/swagger-ui.css")
                 || request.getRequestURI().matches("/swagger-ui-bundle.js")
-                || request.getRequestURI().matches("/swagger-ui/index.css")
+                || request.getRequestURI().matches("/swagger-ui/index.css")*/
         ){
             filterChain.doFilter(request, response);
         } else if (HttpMethod.OPTIONS.name().equals(request.getMethod())){

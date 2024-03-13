@@ -37,15 +37,16 @@ public class SecurityConfiguration {
 
     }
 
-    /*@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> {
                     authz.requestMatchers(HttpMethod.GET, "/health").permitAll();
                     authz.requestMatchers(HttpMethod.POST, "/v1/auth").permitAll();
-                    authz.requestMatchers("/swagger-ui.html/**").permitAll();
+                    authz.requestMatchers("/swagger-ui/**").permitAll();
                     authz.requestMatchers("/v3/api-docs/**").permitAll();
+                    authz.requestMatchers("/swagger-ui.html").permitAll();
                     authz.anyRequest().authenticated();
                 })
                 .httpBasic(withDefaults())
@@ -54,8 +55,8 @@ public class SecurityConfiguration {
 
 
         return http.build();
-    }*/
-    @Bean
+    }
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .cors().disable()
@@ -72,6 +73,6 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
+    }*/
 
 }
